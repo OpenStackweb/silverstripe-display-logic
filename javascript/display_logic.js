@@ -137,6 +137,11 @@
 				var holderName = this.nameToHolder(this.escapeSelector(masters[m]));
 				var master = this.closest('form').find(this.escapeSelector('#'+holderName));
 
+				// pre SS 3.2
+				if(master.length == 0){
+                    master =  this.closest('form').find('#'+masters[m]);
+                }
+
 				if(!master.is('.readonly')) allReadonly = false;
 
 				master.addClass("display-logic-master");
@@ -214,43 +219,43 @@
 	});
 
 	var animation = {
-		
+
 		toggle: {
-			
+
 			show: function(el) {
 				el.show();
 			},
-			
+
 			hide: function(el) {
 				el.hide();
 			}
-			
+
 		},
-		
+
 		slide: {
-			
+
 			show: function(el) {
 				el.slideDown();
 			},
-			
+
 			hide: function(el) {
 				el.slideUp();
 			}
-			
+
 		},
-		
+
 		fade: {
-			
+
 			show: function(el) {
 				el.fadeIn();
 			},
-			
+
 			hide: function(el) {
 				el.fadeOut();
 			}
-			
+
 		},
-		
+
 		perform: function(el, result, method) {
 			if(typeof method == 'undefined') method = 'toggle';
 			if(result) {
@@ -259,7 +264,7 @@
 				this[method].hide(el);
 			}
 		}
-		
+
 	};
 
 
