@@ -6,9 +6,12 @@
 		},
 
 		findHolder: function(name) {
-			return this.closest('form').find(
-				this.escapeSelector('#'+this.nameToHolder(name))
-			);
+			// pre SS 32
+            var holder = this.closest('form').find('#OrganizationalRole');
+			if(!holder || holder.length == 0) {
+                holder = this.closest('form').find(this.escapeSelector('#' + this.nameToHolder(name)));
+            }
+            return holder;
 		},
 
 		getFormField: function() {
@@ -213,9 +216,13 @@
 
 
 	$('input[type=checkbox]').entwine({
-		getLabel: function() {
-			return this.closest('form').find('label[for='+this.getHolder().escapeSelector(this.attr('id'))+']');
-		}
+        getLabel: function() {
+            var label = this.closest('form').find('label[for='+this.attr('id')+']');
+            if(!label || label.length == 0) {
+                label = this.closest('form').find('label[for=' + this.getHolder().escapeSelector(this.attr('id')) + ']');
+            }
+            return label;
+        }
 	});
 
 	var animation = {
@@ -328,7 +335,8 @@
 			this.closest("form").find('.display-logic').each(function() {
 				masters = $(this).getMasters();
 				for(var m in masters) {
-					if(self.nameToHolder(masters[m]) == self.attr('id')) {
+                    // pre SS 3.2
+                    if(self.nameToHolder(masters[m]) == self.attr('id') || masters[m] == self.attr('id') ) {
 						listeners.push($(this)[0]);
 						break;
 					}
@@ -349,10 +357,10 @@
 		}
 	});
 
-	$('div.field *').entwine({
-		getHolder: function() {
-			return this.parents('.field');
-		}
-	});
+    $('div.display-logic *').entwine({
+        getHolder: function() {
+            return this.closest('.display-logic');
+        }
+    });
 
 })(jQuery);
