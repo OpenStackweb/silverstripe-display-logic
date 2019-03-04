@@ -7,7 +7,7 @@
 
 		findHolder: function(name) {
 			// pre SS 32
-            var holder = this.closest('form').find('#OrganizationalRole');
+            var holder = this.closest('form').find('#'+name);
 			if(!holder || holder.length == 0) {
                 holder = this.closest('form').find(this.escapeSelector('#' + this.nameToHolder(name)));
             }
